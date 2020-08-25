@@ -21,7 +21,8 @@
     <c:forEach items="${list}" var="item">
         <div><c:out value="${item.key}"/>
             <c:out value="${item.value}"/>
-            <a href="<c:url value='/update?id=${item.key}'/>">редактировать</a> </div>
+            <a href="<c:url value='/update?id=${item.key}'/>">редактировать</a>
+        </div>
     </c:forEach>
 </div>
 <div style="text-align: center">
