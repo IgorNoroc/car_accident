@@ -19,14 +19,10 @@ public class AccidentService {
     }
 
     public void save(Accident accident) {
-        mem.create(accident);
+        mem.save(accident);
     }
 
     public Accident findById(int id) {
         return mem.getAccidents().get(id);
-    }
-
-    public void update(Accident accident) {
-        mem.update(accident);
     }
 }
