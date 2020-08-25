@@ -4,46 +4,43 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class AccidentService {
-    private final AccidentMem mem;
+    private AccidentJdbcTemplate jdbc;
 
-    public AccidentService(AccidentMem mem) {
-        this.mem = mem;
-    }
-
-    public Map<Integer, Accident> getAllAccidents() {
-        return mem.getAccidents();
-    }
-
-    public Collection<AccidentType> types() {
-        return mem.getTypes();
-    }
-
-    public HashMap<Integer, Rule> rules() {
-        return mem.getRules();
+    public AccidentService(AccidentJdbcTemplate jdbc) {
+        this.jdbc = jdbc;
     }
 
     public void save(Accident accident) {
-        mem.save(accident);
+        jdbc.save(accident);
+    }
+
+    public void update(Accident accident) {
+        jdbc.update(accident);
     }
 
     public Accident findById(int id) {
-        return mem.getAccidents().get(id);
+        return jdbc.findAccidentById(id);
     }
 
-    public void setRulesToAccident(Accident accident, String[] rules) {
-        for (String id : rules) {
-            accident.getRules().add(
-                    Rule.of(
-                            Integer.parseInt(id),
-                            mem.getRules().get(Integer.valueOf(id)).getName()));
-        }
+    public Collection<Accident> allAccidents() {
+        return jdbc.getAll();
+    }
+
+    public Collection<AccidentType> allTypes() {
+        return jdbc.getTypes();
+    }
+
+    public Collection<Rule> allRules() {
+        return jdbc.getRules();
+    }
+
+    public AccidentType findTypeById(int id) {
+        return jdbc.getTypeById(id);
     }
 }

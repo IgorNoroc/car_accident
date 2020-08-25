@@ -7,7 +7,7 @@
 <body>
 <div style="margin: auto">
     старое название : <c:out value="${updateAccident.name}"/>
-    <form action="<c:url value='/save?id=${updateAccident.id}&text=${updateAccident.text}&address=${updateAccident.address}'/>"
+    <form action="<c:url value='/update?id=${updateAccident.id}'/>"
           method="post">
        новое название : <input type="text" name="name" title="name">
         <button type="submit" class="btn btn-success">изменить</button>

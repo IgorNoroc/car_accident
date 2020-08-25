@@ -45,6 +45,9 @@ public class AccidentType {
 
     @Override
     public String toString() {
-        return String.valueOf(id);
+        return "AccidentType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

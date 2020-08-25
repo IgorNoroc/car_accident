@@ -19,9 +19,11 @@
 <body>
 <div style="text-align: center">
     <c:forEach items="${list}" var="item">
-        <div><c:out value="${item.key}"/>
-            <c:out value="${item.value}"/>
-            <a href="<c:url value='/update?id=${item.key}'/>">редактировать</a>
+        <div><c:out value="${item.name}"/>
+            <c:out value="${item.text}"/>
+            <c:out value="${item.address}"/>
+            <c:out value="${item.type.name}"/>
+            <a href="<c:url value='/update?id=${item.id}'/>">редактировать</a>
         </div>
     </c:forEach>
 </div>
