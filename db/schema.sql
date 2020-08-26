@@ -5,3 +5,4 @@ text varchar(2000),
 address varchar(200),
 accident_type
 );
+

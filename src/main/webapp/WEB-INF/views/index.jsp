@@ -17,6 +17,9 @@
     <title>car accident</title>
 </head>
 <body>
+<div>
+    Login as : ${user.username}
+</div>
 <div style="text-align: center">
     <c:forEach items="${list}" var="item">
         <div><c:out value="${item.name}"/>
