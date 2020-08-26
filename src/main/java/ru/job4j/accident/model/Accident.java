@@ -1,22 +1,36 @@
 package ru.job4j.accident.model;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.*;
 
+@Entity
+@Table(name = "accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String text;
     private String address;
+    @ManyToOne
+    @JoinColumn(name = "accident_type")
     private AccidentType type;
-    private Set<Rule> rules = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Rule> rules = new ArrayList<>();
 
-    public Accident( String name, String text, String address, AccidentType type) {
+    public Accident() {
+
+    }
+
+    public Accident(String name, String text, String address, AccidentType type) {
         this.name = name;
         this.text = text;
         this.address = address;
         this.type = type;
+    }
+
+    public void addRule(Rule... rule) {
+        rules.addAll(Arrays.asList(rule));
     }
 
     public int getId() {
@@ -59,11 +73,11 @@ public class Accident {
         this.type = type;
     }
 
-    public Set<Rule> getRules() {
+    public List<Rule> getRules() {
         return rules;
     }
 
-    public void setRules(Set<Rule> rules) {
+    public void setRules(List<Rule> rules) {
         this.rules = rules;
     }
 

@@ -4,43 +4,46 @@ import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentJdbcTemplate;
+import ru.job4j.accident.repository.AccidentHibernate;
 
-import java.util.Collection;
+import java.util.*;
 
 @Service
 public class AccidentService {
-    private AccidentJdbcTemplate jdbc;
+    private final AccidentHibernate database;
 
-    public AccidentService(AccidentJdbcTemplate jdbc) {
-        this.jdbc = jdbc;
+    public AccidentService(AccidentHibernate database) {
+        this.database = database;
     }
 
     public void save(Accident accident) {
-        jdbc.save(accident);
+        database.save(accident);
+    }
+
+    public Collection<Accident> accidents() {
+        return database.getAll();
+    }
+
+    public Collection<AccidentType> types() {
+        return database.getAllTypes();
+    }
+
+    public Collection<Rule> rules() {
+        return database.getAllRules();
+    }
+
+    public Object findById(int id) {
+        return database.findAccidentById(id);
     }
 
     public void update(Accident accident) {
-        jdbc.update(accident);
+        database.update(accident);
     }
 
-    public Accident findById(int id) {
-        return jdbc.findAccidentById(id);
-    }
-
-    public Collection<Accident> allAccidents() {
-        return jdbc.getAll();
-    }
-
-    public Collection<AccidentType> allTypes() {
-        return jdbc.getTypes();
-    }
-
-    public Collection<Rule> allRules() {
-        return jdbc.getRules();
-    }
-
-    public AccidentType findTypeById(int id) {
-        return jdbc.getTypeById(id);
+    public void addRulesToAccident(Accident accident, String[] ids) {
+        for (String id : ids) {
+            Rule rule = database.findRuleById(Integer.parseInt(id));
+            accident.getRules().add(rule);
+        }
     }
 }
